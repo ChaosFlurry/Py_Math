@@ -58,9 +58,3 @@ class Fraction:
             return True
         else:
             return False
-
-a = Fraction(5, 6)
-print(a.to_str())
-g = Fraction.value_of(2)
-f = g.to_str()
-print(f)
