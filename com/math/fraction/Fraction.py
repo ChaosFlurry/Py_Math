@@ -1,4 +1,5 @@
-from com.math.util import MathUtil
+from com.math.util import Math
+from decimal import Decimal
 
 
 class Fraction:
@@ -39,22 +40,74 @@ class Fraction:
         else:
             return str(self.numerator) + "/" + str(self.denominator)
 
+    @staticmethod
+    def equals(f1, f2):
+        if (f1.simplify().numerator == f2.simplify().numerator
+                and f2.simplify().denominator == f1.simplify().denominator):
+            return True
+        return False
+
+    def to_float(self):
+        return self.numerator / self.denominator
+
+    def to_decimal(self):
+        return Decimal(self.numerator) / Decimal(self.denominator)
+
     def simplify(self):
         numerator = self.numerator
         denominator = self.denominator
-        gcd = MathUtil.gcd(numerator, denominator)
+        gcd = Math.gcd(numerator, denominator)
 
-        numerator /= gcd
-        denominator /= gcd
+        # Floor division to maintain precision when dividing by large numbers
+        numerator //= gcd
+        denominator //= gcd
 
         if denominator < 0:
             numerator *= -1
             denominator *= -1
-        self.numerator = int(numerator)
-        self.denominator = int(denominator)
+
+        return Fraction(int(numerator), int(denominator))
 
     def is_undefined(self):
         if self.denominator == 0:
             return True
-        else:
-            return False
+        return False
+
+    def reciprocal(self):
+        return Fraction(self.denominator, self.numerator).simplify()
+
+    def add_int(self, n):
+        return Fraction(self.numerator + self.numerator * n,
+                        self.denominator).simplify()
+
+    def add_fraction(self, f):
+        return Fraction(self.numerator * f.denominator +
+                        f.numerator * self.denominator,
+                        self.denominator * f.denominator).simplify()
+
+    def subtract_int(self, n):
+        return Fraction(self.numerator - self.numerator * n,
+                        self.denominator).simplify()
+
+    def subtract_fraction(self, f):
+        return Fraction(self.numerator * f.denominator -
+                        f.numerator * self.denominator,
+                        self.denominator * f.denominator).simplify()
+
+    def multiply_int(self, n):
+        return Fraction(self.numerator * n, self.denominator).simplify()
+
+    def multiply_fraction(self, f):
+        return Fraction(self.numerator * f.numerator,
+                        self.denominator * f.denominator).simplify()
+
+    def divide_int(self, n):
+        return Fraction(self.numerator, self.numerator * n).simplify()
+
+    def divide_fraction(self, f):
+        return Fraction(self.numerator * f.denominator,
+                        self.denominator * f.numerator).simplify()
+
+    def pow(self, n):
+        return Fraction(self.simplify().numerator ** n,
+                        self.simplify().denominator ** n).simplify()
