@@ -1,6 +1,3 @@
-from decimal import Decimal
-
-
 def gcd(a: int, b: int):
     a = abs(a)
     b = abs(b)
@@ -19,6 +16,3 @@ def gcd(a: int, b: int):
 
 def lcm(a, b):
     return a / gcd(a, b) * b
-
-print(gcd(7400249944258160101211, 247064529073450392704413))
-print(int(7400249944258160101211 / 7400249944258160101211))

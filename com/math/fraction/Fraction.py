@@ -7,24 +7,24 @@ class Fraction:
         if denominator < 0:
             numerator *= -1
             denominator *= -1
-        self._numerator = numerator
-        self._denominator = denominator
+        self._numerator = int(numerator)
+        self._denominator = int(denominator)
 
     @property
     def numerator(self):
-        return self._numerator
+        return int(self._numerator)
 
     @numerator.setter
     def numerator(self, numerator):
-        self._numerator = numerator
+        self._numerator = int(numerator)
 
     @property
     def denominator(self):
-        return self._denominator
+        return int(self._denominator)
 
     @denominator.setter
     def denominator(self, denominator):
-        self._denominator = denominator
+        self._denominator = int(denominator)
 
     @staticmethod
     def value_of(n):
@@ -56,11 +56,12 @@ class Fraction:
     def simplify(self):
         numerator = self.numerator
         denominator = self.denominator
-        gcd = Math.gcd(numerator, denominator)
+        gcd = Decimal(Math.gcd(numerator, denominator))
 
         # Floor division to maintain precision when dividing by large numbers
-        numerator //= gcd
-        denominator //= gcd
+        if gcd != 0:
+            numerator //= gcd
+            denominator //= gcd
 
         if denominator < 0:
             numerator *= -1
@@ -108,6 +109,14 @@ class Fraction:
         return Fraction(self.numerator * f.denominator,
                         self.denominator * f.numerator).simplify()
 
-    def pow(self, n):
-        return Fraction(self.simplify().numerator ** n,
-                        self.simplify().denominator ** n).simplify()
+    def pow(self, n: int):
+        if n == 0:
+            if self.numerator != 0 and self.denominator != 0:
+                return Fraction(1, 1)
+            else:
+                return Fraction(0, 0)
+        elif n < 0:
+            return Fraction(self.denominator ** int(n * -1), self.numerator ** int(n * -1)).simplify()
+        else:
+            return Fraction(self.numerator ** int(n),
+                            self.denominator ** int(n)).simplify()
