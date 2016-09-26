@@ -56,9 +56,9 @@ class Fraction:
     def simplify(self):
         numerator = self.numerator
         denominator = self.denominator
-        gcd = Decimal(Math.gcd(numerator, denominator))
+        gcd = Math.gcd(numerator, denominator)
 
-        # Floor division to maintain precision when dividing by large numbers
+        # Floor division to avoid converting from int to float
         if gcd != 0:
             numerator //= gcd
             denominator //= gcd
@@ -67,7 +67,7 @@ class Fraction:
             numerator *= -1
             denominator *= -1
 
-        return Fraction(int(numerator), int(denominator))
+        return Fraction(numerator, denominator)
 
     def is_undefined(self):
         if self.denominator == 0:
@@ -75,7 +75,10 @@ class Fraction:
         return False
 
     def reciprocal(self):
-        return Fraction(self.denominator, self.numerator).simplify()
+        return Fraction(self.denominator, self.numerator)
+
+    def abs(self):
+        return Fraction(abs(self.numerator), abs(self.denominator))
 
     def add_int(self, n):
         return Fraction(self.numerator + self.numerator * n,
@@ -116,7 +119,9 @@ class Fraction:
             else:
                 return Fraction(0, 0)
         elif n < 0:
-            return Fraction(self.denominator ** int(n * -1), self.numerator ** int(n * -1)).simplify()
+            return Fraction(self.denominator ** int(n * -1),
+                            self.numerator ** int(n * -1)).simplify()
         else:
             return Fraction(self.numerator ** int(n),
                             self.denominator ** int(n)).simplify()
+
