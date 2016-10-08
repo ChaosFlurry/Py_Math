@@ -124,4 +124,3 @@ class Fraction:
         else:
             return Fraction(self.numerator ** int(n),
                             self.denominator ** int(n)).simplify()
-
