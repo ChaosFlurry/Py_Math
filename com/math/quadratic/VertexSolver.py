@@ -2,11 +2,20 @@ from com.math.fraction.Fraction import Fraction
 
 
 class VertexSolver:
-    def __init__(self, h: int, k: int, x: int, y: int):
-        self.h = int(h)
-        self.k = int(k)
-        self.x = int(x)
-        self.y = int(y)
+    def __init__(self, h, k, x, y):
+        self.h = h
+        self.k = k
+        self.x = x
+        self.y = y
+
+    @classmethod
+    def from_user_input(cls):
+        h = float(input("h: "))
+        k = float(input("k: "))
+        x = float(input("x: "))
+        y = float(input("y: "))
+        print("")
+        return cls(h, k, x, y)
 
     def solve(self):
         print("Vertex: " + "(" + str(self.h) + ", " + str(self.k) + ")")
@@ -86,9 +95,9 @@ class VertexSolver:
 
             # Final equation
             final_equation = "y = "
-            if a.numerator // a.denominator == -1:
+            if a.numerator / a.denominator == -1:
                 final_equation += "-"
-            elif a.numerator // a.denominator != 1:
+            elif a.numerator / a.denominator != 1:
                 final_equation += a.to_str()
             if self.h < 0:
                 final_equation += "(x + " + str(self.h * -1) + ")^2"
@@ -106,5 +115,6 @@ class VertexSolver:
 
 # Test code
 if __name__ == "__main__":
-    v = VertexSolver(0, 0, 2, 4)
-    v.solve()
+    while True:
+        v = VertexSolver.from_user_input()
+        v.solve()

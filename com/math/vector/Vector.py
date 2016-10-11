@@ -12,6 +12,7 @@ class Vector:
             self.angle = 0
         else:
             self.angle = degrees(atan(y / x))
+
         # Correcting negative angles
         if x < 0 and y < 0:
             self.angle = degrees(atan(y / x)) + 180
@@ -30,9 +31,8 @@ class Vector:
         return cls(distance * cos(radians(angle)), distance * sin(radians(angle)))
 
     @classmethod
-    def from_user_input(cls, mode="angle"):
-        # TODO handle user input (if user gives invalid value)
-        if mode is "angle":
+    def from_user_input(cls, mode="polar"):
+        if mode is "polar":
             distance = float(input("Distance: "))
             angle = input("Angle: ")
             absolute_angle = re.compile("^(-?\d+\.?\d*)$")
@@ -51,6 +51,7 @@ class Vector:
                 angle = float(angle)
             else:
                 # invalid input
+                # TODO handle user input (if user gives invalid value)
                 pass
 
             # formatting
@@ -80,6 +81,10 @@ class Vector:
     @staticmethod
     def subtract(v1, v2):
         return Vector(v1.x - v2.x, v1.y - v2.y)
+
+    @staticmethod
+    def dot_product(v1, v2):
+        return v1.x * v2.x + v1.y * v2.y
 
     @staticmethod
     def to_std_pos_angle(angle, relative_of):
